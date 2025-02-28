@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-waste Trading</title>
+    <!--Boostrap CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--Custom Css-->
+    <link ref="stylesheet" href="/public/css/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item"><a id="len1" class="hoverable" href="/">Home</a></li>
+                            <li class="nav-item"><a id="len2" class="hoverable" href="/about">About</a></li>
+                            <li class="nav-item"><a id="len3" class="hoverable" href="/services">Services</a></li>
+                            <li class="nav-item"><a id="len3" class="hoverable" href="/products/lists">Buy-Sell</a></li>
+                            <li class="nav-item"><a id="len4" class="hoverable" href="/contact">Contact</a></li>
+                            <li class="nav-item"><a id="len3" class="hoverable" href="/services">Services</a></li>
+                            <% if (typeof userId !=='underfine' && userId) { %>
+                                <li class="nav-item"><a class="len-5" class="hoverable" href="/auth/logout">Logout</a>
+                                </li>
+                                <% } else { %>
+                                    <li class="nav-item"><a class="len-6" class="hoverable" href="/auth/login">Login</a>
+                                    </li>
+                                    <li class="nav-item"><a class="len-7" class="ho" href="/auth/register">Register</a>
+                                    </li>
+                                    <% } %>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+    </header>
+</body>
+
+</html>

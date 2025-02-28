@@ -1,0 +1,104 @@
+<%- include('partials/header') %>
+    <main class="container my-5">
+        <h1 class="text-center mb-4">Buy-Sell E-Waste</h1>
+
+        <!-- Search and Filter Form -->
+        <form action="/products/lists" method="GET" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search products..." value="<%= search || '' %>">
+                <select name="category" class="form-control">
+                    <option value="">All Categories</option>
+                    <option value="Electronics" <%= category === 'Electronics' ? 'selected' : '' %>>Electronics</option>
+                    <option value="Appliances" <%= category === 'Appliances' ? 'selected' : '' %>>Appliances</option>
+                    <option value="Computers" <%= category === 'Computers' ? 'selected' : '' %>>Computers</option>
+                    <option value="Mobile Phones" <%= category === 'Mobile Phones' ? 'selected' : '' %>>Mobile Phones</option>
+                    <option value="Other" <%= category === 'Other' ? 'selected' : '' %>>Other</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <!-- Product Listing Form (for logged-in users) -->
+        <% if (userId) { %>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">List a Product</h2>
+                    <form action="/products/lists" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Product Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea id="description" name="description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price:</label>
+                            <input type="number" id="price" name="price" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category:</label>
+                            <select id="category" name="category" class="form-control" required>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Appliances">Appliances</option>
+                                <option value="Computers">Computers</option>
+                                <option value="Mobile Phones">Mobile Phones</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">List Product</button>
+                    </form>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="alert alert-warning">
+                Please <a href="/auth/login">login</a> to list a product.
+            </div>
+        <% } %>
+
+        <!-- Display Available Products -->
+        <h2 class="text-center mb-4">Available Products</h2>
+        <div class="row">
+            <% products.forEach(product => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Product Name with Link to Details Page -->
+                            <h3 class="card-title">
+                                <a href="/products/details/<%= product._id %>"><%= product.name %></a>
+                            </h3>
+
+                            <!-- Product Description -->
+                            <p class="card-text"><%= product.description %></p>
+
+                            <!-- Product Price -->
+                            <p class="card-text"><strong>Price:</strong> $<%= product.price %></p>
+
+                            <!-- Product Category -->
+                            <p class="card-text"><strong>Category:</strong> <%= product.category %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav>
+                <ul class="pagination">
+                    <% if (page > 1) { %>
+                        <li class="page-item"><a class="page-link" href="/products/lists?search=<%= search %>&category=<%= category %>&page=<%= page - 1 %>">Previous</a></li>
+                    <% } %>
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= i === page ? 'active' : '' %>">
+                            <a class="page-link" href="/products/lists?search=<%= search %>&category=<%= category %>&page=<%= i %>"><%= i %></a>
+                        </li>
+                    <% } %>
+                    <% if (page < totalPages) { %>
+                        <li class="page-item"><a class="page-link" href="/products/lists?search=<%= search %>&category=<%= category %>&page=<%= page + 1 %>">Next</a></li>
+                    <% } %>
+                </ul>
+            </nav>
+        </div>
+    </main>
+<%- include('partials/footer') %>

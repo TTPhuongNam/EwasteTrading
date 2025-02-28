@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+    <main class="container my-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title"><%= product.name %></h1>
+                <p class="card-text"><%= product.description %></p>
+                <p class="card-text"><strong>Price:</strong> $<%= product.price %></p>
+                <p class="card-text"><strong>Seller:</strong> <%= product.seller.username %></p>
+                <% if (userId && userId === product.seller._id.toString()) { %>
+                    <a href="/products/edit/<%= product._id %>" class="btn btn-warning">Edit</a>
+                    <form action="/products/delete/<%= product._id %>" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                <% } %>
+                <a href="/products/lists" class="btn btn-primary">Back to List</a>
+            </div>
+        </div>
+    </main>
+<%- include('partials/footer') %>
